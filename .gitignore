@@ -1,9 +1,12 @@
-*.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+!.idea/codeStyleSettings.xml
+/.idea/
 .DS_Store
+Thumbs.db
 /build
 /captures
-.externalNativeBuild
+*.iml
+/target
+*.db3
+projectFilesBackup
