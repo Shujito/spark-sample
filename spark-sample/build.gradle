@@ -1,0 +1,15 @@
+apply plugin: 'application'
+
+//noinspection GroovyUnusedAssignment
+mainClassName = 'org.shujito.sparksample.Application'
+
+dependencies {
+	// server
+	compile 'com.sparkjava:spark-core:2.5.1'
+	// storage
+	compile 'org.jdbi:jdbi:2.77'
+	compile 'org.xerial:sqlite-jdbc:3.14.2.1'
+	// utils
+	compile 'org.projectlombok:lombok:1.16.10'
+	compile 'com.google.code.gson:gson:2.7'
+}
