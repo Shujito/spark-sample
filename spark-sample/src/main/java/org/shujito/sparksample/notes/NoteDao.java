@@ -1,4 +1,4 @@
-package org.shujito.sparksample;
+package org.shujito.sparksample.notes;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;

@@ -1,4 +1,4 @@
-package org.shujito.sparksample;
+package org.shujito.sparksample.root;
 
 import org.skife.jdbi.v2.DBI;
 

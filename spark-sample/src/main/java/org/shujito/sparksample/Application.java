@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.eclipse.jetty.http.HttpHeader;
+import org.shujito.sparksample.notes.NoteController;
+import org.shujito.sparksample.root.RootController;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 

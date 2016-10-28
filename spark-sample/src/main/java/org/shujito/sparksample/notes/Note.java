@@ -1,4 +1,4 @@
-package org.shujito.sparksample;
+package org.shujito.sparksample.notes;
 
 import com.google.gson.annotations.SerializedName;
 
