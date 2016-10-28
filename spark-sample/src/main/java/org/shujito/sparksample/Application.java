@@ -8,9 +8,6 @@ import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
 import spark.Filter;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.Spark;
 
 @SuppressWarnings("NewApi")
