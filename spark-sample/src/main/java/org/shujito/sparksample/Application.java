@@ -17,32 +17,31 @@ public class Application {
 		DBI dbi = new DBI("jdbc:sqlite:notes.db3");
 		try (Handle handle = dbi.open()) {
 			handle.begin();
-			handle.execute("create table if not exists notes(id integer primary key on conflict fail, title text not null, content text not null);");
+			handle.execute("create table if not exists notes(id integer primary key on conflict fail, title text not null, content text not null)");
+			handle.execute("create view if not exists unixtime as select cast(((julianday('now') - julianday('1970-01-01')) * 86400000) as integer) as unixtime");
 			//handle.execute("insert into notes(title,content) values('A title','Some text'),('Another title','Read here, you!');");
 			handle.commit();
 		}
-		NoteDao noteDao = dbi.onDemand(NoteDao.class);
 		Gson gson = new GsonBuilder().create();
 		Spark.exception(Exception.class, (exception, request, response) -> {
-			exception.printStackTrace();
 			response.status(500);
-			response.body("this happened:'" + exception + "'");
+			response.header(HttpHeader.CONTENT_TYPE.asString(), "application/json");
+			ApiResponse apiResponse = ApiResponse.builder()
+				.status(500)
+				.success(false)
+				.message(exception.getMessage())
+				.build();
+			response.body(gson.toJson(apiResponse));
 		});
-		Spark.get("/", (request, response) -> "hi there");
-		Spark.get("/notes", (request, response) -> {
-			return noteDao.all();
-		}, gson::toJson);
-		Spark.get("/note/:id", (request, response) -> {
-			String id = request.params("id");
-			return noteDao.one(id);
-		}, gson::toJson);
-		Spark.post("/note", "application/json", (request, response) -> {
-			Note note = gson.fromJson(request.body(), Note.class);
-			int insertedId = noteDao.insert(note.getTitle(), note.getContent());
-			return noteDao.one(String.valueOf(insertedId));
-		}, gson::toJson);
+		NoteController noteController = new NoteController(dbi, gson);
+		RootController rootController = new RootController(dbi);
+		Spark.get("/", rootController::getRoot, gson::toJson);
+		Spark.get("/notes", noteController::getAll, gson::toJson);
+		Spark.get("/note/:id", noteController::getOne, gson::toJson);
+		Spark.post("/note", "application/json", noteController::postNote, gson::toJson);
 		Spark.after((Filter) (request, response) -> {
 			response.header(HttpHeader.CONTENT_TYPE.asString(), "application/json");
+			response.header(HttpHeader.CONTENT_ENCODING.asString(), "gzip");
 		});
 	}
 }
