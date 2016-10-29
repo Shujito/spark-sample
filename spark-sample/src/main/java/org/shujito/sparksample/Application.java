@@ -38,9 +38,12 @@ public class Application {
 		NoteController noteController = new NoteController(dbi, gson);
 		RootController rootController = new RootController(dbi);
 		Spark.get("/", rootController::getRoot, gson::toJson);
+		// notes
 		Spark.get("/notes", noteController::getAll, gson::toJson);
 		Spark.get("/note/:id", noteController::getOne, gson::toJson);
 		Spark.post("/note", "application/json", noteController::postNote, gson::toJson);
+		Spark.delete("/note/:id", noteController::deleteNote, gson::toJson);
+		// filter
 		Spark.after((Filter) (request, response) -> {
 			response.header(HttpHeader.CONTENT_TYPE.asString(), "application/json");
 			response.header(HttpHeader.CONTENT_ENCODING.asString(), "gzip");

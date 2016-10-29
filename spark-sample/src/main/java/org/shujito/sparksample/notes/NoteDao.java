@@ -17,7 +17,7 @@ public interface NoteDao {
 	List<Note> all();
 
 	@SqlQuery("select * from notes where id is :id")
-	Note one(@Bind("id") String id);
+	Note one(@Bind("id") int id);
 
 	@GetGeneratedKeys
 	@SqlUpdate("insert into notes(title,content) values (:title,:content)")
@@ -25,4 +25,7 @@ public interface NoteDao {
 		@Bind("title") String title,
 		@Bind("content") String content
 	);
+
+	@SqlUpdate("delete from notes where id is :id")
+	int delete(@Bind("id") int id);
 }
