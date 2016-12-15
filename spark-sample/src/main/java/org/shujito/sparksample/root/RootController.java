@@ -3,6 +3,7 @@ package org.shujito.sparksample.root;
 import org.skife.jdbi.v2.DBI;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import spark.Request;
@@ -20,9 +21,14 @@ public class RootController {
 	}
 
 	public Object getRoot(Request request, Response response) {
-		HashMap<String, Object> map = new HashMap<>();
+		String ip = request.headers("X-Forwarded-For");
+		if (ip == null) {
+			ip = request.ip();
+		}
+		Map<String, Object> map = new HashMap<>();
 		map.put("millis", this.rootDao.unixtime());
 		map.put("uuid", UUID.randomUUID());
+		map.put("ip", ip);
 		return map;
 	}
 }

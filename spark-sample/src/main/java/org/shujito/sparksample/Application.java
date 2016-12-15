@@ -15,7 +15,7 @@ import spark.Spark;
 @SuppressWarnings("NewApi")
 public class Application {
 	public static void main(String[] args) {
-		Spark.port(1337);
+		Spark.port(getPort());
 		DBI dbi = new DBI("jdbc:sqlite:notes.db3");
 		try (Handle handle = dbi.open()) {
 			handle.begin();
@@ -48,5 +48,15 @@ public class Application {
 			response.header(HttpHeader.CONTENT_TYPE.asString(), "application/json");
 			response.header(HttpHeader.CONTENT_ENCODING.asString(), "gzip");
 		});
+		System.out.println("running on port '" + Spark.port() + "'");
+	}
+
+	private static int getPort() {
+		try {
+			String port = System.getProperty("port");
+			return Integer.parseInt(port);
+		} catch (NumberFormatException nfe) {
+			return 1337;
+		}
 	}
 }
