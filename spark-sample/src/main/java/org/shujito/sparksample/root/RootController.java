@@ -13,7 +13,6 @@ import spark.Response;
  * @author shujito, 10/28/16
  */
 public class RootController {
-	public static final String TAG = RootController.class.getSimpleName();
 	private final RootDao rootDao;
 
 	public RootController(DBI dbi) {

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 
 import org.eclipse.jetty.http.HttpStatus;
 import org.shujito.sparksample.ApiResponse;
-import org.skife.jdbi.cglib.proxy.Mixin;
 import org.skife.jdbi.v2.DBI;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import spark.Response;
  * @author shujito, 10/28/16
  */
 public class NoteController {
-	public static final String TAG = NoteController.class.getSimpleName();
 	private final NoteDao noteDao;
 	private final Gson gson;
 
