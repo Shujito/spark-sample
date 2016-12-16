@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import org.eclipse.jetty.http.HttpStatus;
 import org.shujito.sparksample.ApiResponse;
+import org.skife.jdbi.cglib.proxy.Mixin;
 import org.skife.jdbi.v2.DBI;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class NoteController {
 
 	public Note postNote(Request request, Response response) {
 		Note note = this.gson.fromJson(request.body(), Note.class);
-		int insertedId = noteDao.insert(note.getTitle(), note.getContent());
+		int insertedId = noteDao.insert(note);
 		return noteDao.one(insertedId);
 	}
 

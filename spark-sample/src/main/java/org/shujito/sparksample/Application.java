@@ -48,6 +48,7 @@ public class Application {
 			response.header(HttpHeader.CONTENT_TYPE.asString(), "application/json");
 			response.header(HttpHeader.CONTENT_ENCODING.asString(), "gzip");
 		});
+		Spark.notFound(gson.toJson(ApiResponse.builder().status(404).message("Not found")));
 		System.out.println("running on port '" + Spark.port() + "'");
 	}
 
